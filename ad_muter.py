@@ -2,6 +2,7 @@ import win32gui
 import win32api
 import win32con
 import os
+from time import sleep
 
 def getwindow(Title="SpotifyMainWindow"):
 	return win32gui.FindWindow(Title, None)
@@ -15,14 +16,19 @@ def getSongInfo():
 def toggle_mute():
     win32api.keybd_event(0xAD, 0, 0, 0)
 
-while(True):
+
+def main():
     mute = False
-    if not mute:
-        if ('spotify' in getSongInfo().lower()):
-            toggle_mute()
-            mute = True
-    if mute:
-        if ('spotify' not in getSongInfo().lower()):
-            toggle_mute()
-            mute = False
-        
+    while(True):
+        key = 'paint'
+        sleep(.2)
+        if not mute:
+            if (key in getSongInfo().lower()):
+                mute = True
+                toggle_mute()
+
+        if mute:
+            if (key not in getSongInfo().lower()):
+                toggle_mute()
+                mute = False
+main()            
